@@ -18,11 +18,21 @@ public class Hero : MonoBehaviour
 
     public float pitchMult = 30;
 
+    public float gameRestartDelay = 2f;
+
+    public GameObject projectilePrefab;
+
+    public float projectileSpeed = 40;
+
 
 
     [Header("Set Dynamically")]
 
-    public float shieldLevel = 1;
+    [SerializeField]
+
+    private float _shieldLevel = 1; // Remember the underscore
+
+    
 
     // This variable holds a reference to the last triggering GameObject
 
@@ -79,6 +89,28 @@ public class Hero : MonoBehaviour
         // Rotate the ship to make it feel more dynamic                      
 
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
+
+        // Allow the ship to fire
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {                           // a
+
+            TempFire();
+
+        }
+    }
+
+    void TempFire()
+    {                                                        // b
+
+        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+
+        projGO.transform.position = transform.position;
+
+        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+
+        rigidB.velocity = Vector3.up * projectileSpeed;
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -114,6 +146,38 @@ public class Hero : MonoBehaviour
         {
 
             print("Triggered by non-Enemy: " + go.name);                       // f
+
+        }
+
+    }
+
+    public float shieldLevel
+    {
+
+        get
+        {
+
+            return (_shieldLevel);                                          // a
+
+        }
+
+        set
+        {
+
+            _shieldLevel = Mathf.Min(value, 4);                             // b
+
+            // If the shield is going to be set to less than zero
+
+            if (value < 0)
+            {                                                 // c
+
+                Destroy(this.gameObject);
+
+                // Tell Main.S to restart the game after a delay
+
+                Main.S.DelayedRestart(gameRestartDelay);
+
+            }
 
         }
 

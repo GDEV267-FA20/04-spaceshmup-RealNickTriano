@@ -88,6 +88,26 @@ public class Main : MonoBehaviour
 
     }
 
+    public void DelayedRestart(float delay)
+    {
+
+        // Invoke the Restart() method in delay seconds
+
+        Invoke("Restart", delay);
+
+    }
+
+
+
+    public void Restart()
+    {
+
+        // Reload _Scene_0 to restart the game
+
+        SceneManager.LoadScene("_Scene_0");
+
+    }
+
 
     // Start is called before the first frame update
     void Start()
