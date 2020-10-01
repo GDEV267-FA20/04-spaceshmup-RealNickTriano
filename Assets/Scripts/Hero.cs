@@ -38,6 +38,17 @@ public class Hero : MonoBehaviour
 
     private GameObject lastTriggerGo = null;
 
+    // Declare a new delegate type WeaponFireDelegate
+
+
+    public delegate void WeaponFireDelegate();                               
+
+
+    // Create a WeaponFireDelegate field named fireDelegate.
+
+
+    public WeaponFireDelegate fireDelegate;
+
 
 
     void Awake()
@@ -50,12 +61,9 @@ public class Hero : MonoBehaviour
             S = this; // Set the Singleton                                   
 
         }
-        else
-        {
 
-            Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
-
-        }
+        fireDelegate += TempFire;
+        
 
     }
     // Start is called before the first frame update
@@ -92,16 +100,35 @@ public class Hero : MonoBehaviour
 
         // Allow the ship to fire
 
-        if (Input.GetKeyDown(KeyCode.Space))
+       /* if (Input.GetKeyDown(KeyCode.Space))
         {                           // a
 
             TempFire();
+
+        }*/
+
+
+        // Use the fireDelegate to fire Weapons
+
+
+        // First, make sure the button is pressed: Axis("Jump")
+
+
+        // Then ensure that fireDelegate isn't null to avoid an error
+
+
+        if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        {            // d
+
+
+            fireDelegate();                                                  
+
 
         }
     }
 
     void TempFire()
-    {                                                        // b
+    {                                                        
 
         GameObject projGO = Instantiate<GameObject>(projectilePrefab);
 
@@ -109,9 +136,26 @@ public class Hero : MonoBehaviour
 
         Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
 
-        rigidB.velocity = Vector3.up * projectileSpeed;
+        //        rigidB.velocity = Vector3.up * projectileSpeed;                    
+
+
+
+
+        Projectile proj = projGO.GetComponent<Projectile>();                
+
+
+        proj.type = WeaponType.blaster;
+
+
+        float tSpeed = Main.GetWeaponDefinition(proj.type).velocity;
+
+
+        rigidB.velocity = Vector3.up * tSpeed;
+
 
     }
+
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -124,13 +168,13 @@ public class Hero : MonoBehaviour
         // Make sure it's not the same triggering go as last time
 
         if (go == lastTriggerGo)
-        {                                           // c
+        {                                           
 
             return;
 
         }
 
-        lastTriggerGo = go;                                                  // d
+        lastTriggerGo = go;                                                  
 
 
 
@@ -139,13 +183,13 @@ public class Hero : MonoBehaviour
 
             shieldLevel--;        // Decrease the level of the shield by 1
 
-            Destroy(go);          // … and Destroy the enemy                 // e
+            Destroy(go);          // … and Destroy the enemy                 
 
         }
         else
         {
 
-            print("Triggered by non-Enemy: " + go.name);                       // f
+            print("Triggered by non-Enemy: " + go.name);                       
 
         }
 
@@ -157,19 +201,19 @@ public class Hero : MonoBehaviour
         get
         {
 
-            return (_shieldLevel);                                          // a
+            return (_shieldLevel);                                          
 
         }
 
         set
         {
 
-            _shieldLevel = Mathf.Min(value, 4);                             // b
+            _shieldLevel = Mathf.Min(value, 4);                             
 
             // If the shield is going to be set to less than zero
 
             if (value < 0)
-            {                                                 // c
+            {                                                 
 
                 Destroy(this.gameObject);
 

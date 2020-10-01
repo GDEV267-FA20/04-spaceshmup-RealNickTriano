@@ -17,10 +17,10 @@ public class Projectile : MonoBehaviour
     public Rigidbody rigid;
 
 
-    [SerializeField]                                                        // a
+    [SerializeField]                                                        
 
 
-    privatee WeaponType      _type;                                          // b
+    private WeaponType      _type;                                          
 
 
 
@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
 
 
     public WeaponType type
-    {                                           // c
+    {                                           
 
 
         get
@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour
         {
 
 
-            SetType(value);                                                // c
+            SetType(value);                                                
 
 
         }
@@ -59,7 +59,7 @@ public class Projectile : MonoBehaviour
 
         bndCheck = GetComponent<BoundsCheck>();
 
-        rend = GetComponent<Renderer>();                                     // d
+        rend = GetComponent<Renderer>();                                    
 
 
         rigid = GetComponent<Rigidbody>();
@@ -82,7 +82,7 @@ public class Projectile : MonoBehaviour
 
 
     public void SetType(WeaponType eType)
-    {                               // e
+    {                               
 
 
         // Set the _type
