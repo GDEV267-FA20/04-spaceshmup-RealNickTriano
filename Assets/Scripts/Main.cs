@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,14 +31,14 @@ public class Main : MonoBehaviour
         // Set bndCheck to reference the BoundsCheck component on this GameObject
 
         bndCheck = GetComponent<BoundsCheck>();
-
+        print("Got BoundsCheck");
 
 
 
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
 
-        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);                      // a
-
+        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);                      
+        print("Invoked SpawnEnemy");
     }
 
 
@@ -47,26 +48,26 @@ public class Main : MonoBehaviour
 
         // Pick a random Enemy prefab to instantiate
 
-        int ndx = Random.Range(0, prefabEnemies.Length);                     // b
+        int ndx = Random.Range(0, prefabEnemies.Length);                     
 
-        GameObject go = Instantiate<GameObject>(prefabEnemies[ndx]);     // c
-
+        GameObject go = Instantiate<GameObject>(prefabEnemies[ndx]);     
+        print("Instantiate Prefab");
 
 
         // Position the Enemy above the screen with a random x position
 
-        float enemyPadding = enemyDefaultPadding;                            // d
-
+        float enemyPadding = enemyDefaultPadding;                            
+        print(go.GetComponent<BoundsCheck>());
         if (go.GetComponent<BoundsCheck>() != null)
-        {                        // e
-
+        {                        
+            print("if statement occuring...");
             enemyPadding = Mathf.Abs(go.GetComponent<BoundsCheck>().radius);
 
         }
 
 
 
-        // Set the initial position for the spawned Enemy                    // f
+        // Set the initial position for the spawned Enemy                    
 
         Vector3 pos = Vector3.zero;
 
@@ -79,12 +80,12 @@ public class Main : MonoBehaviour
         pos.y = bndCheck.camHeight + enemyPadding;
 
         go.transform.position = pos;
-
+        print("Set Position");
 
 
         // Invoke SpawnEnemy() again
 
-        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);                      // g
+        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);                      
 
     }
 

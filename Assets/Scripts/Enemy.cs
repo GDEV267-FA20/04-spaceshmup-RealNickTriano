@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
     {
         Move();
 
-        if (bndCheck != null && !bndCheck.offDown)
+        if (bndCheck != null && bndCheck.offDown)
         {
 
             Destroy(gameObject);
