@@ -17,6 +17,7 @@ public class Main : MonoBehaviour
 
     public float enemyDefaultPadding = 1.5f; // Padding for position
 
+    public WeaponDefinition[] weaponDefinitions;
 
 
     private BoundsCheck bndCheck;
