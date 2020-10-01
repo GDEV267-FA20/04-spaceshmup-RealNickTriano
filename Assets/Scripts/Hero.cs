@@ -62,7 +62,7 @@ public class Hero : MonoBehaviour
 
         }
 
-        fireDelegate += TempFire;
+        //fireDelegate += TempFire;
         
 
     }
