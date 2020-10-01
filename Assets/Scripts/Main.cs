@@ -31,14 +31,14 @@ public class Main : MonoBehaviour
         // Set bndCheck to reference the BoundsCheck component on this GameObject
 
         bndCheck = GetComponent<BoundsCheck>();
-        print("Got BoundsCheck");
+        
 
 
 
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
 
         Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);                      
-        print("Invoked SpawnEnemy");
+        
     }
 
 
@@ -51,7 +51,7 @@ public class Main : MonoBehaviour
         int ndx = Random.Range(0, prefabEnemies.Length);                     
 
         GameObject go = Instantiate<GameObject>(prefabEnemies[ndx]);     
-        print("Instantiate Prefab");
+        
 
 
         // Position the Enemy above the screen with a random x position
@@ -60,7 +60,7 @@ public class Main : MonoBehaviour
         print(go.GetComponent<BoundsCheck>());
         if (go.GetComponent<BoundsCheck>() != null)
         {                        
-            print("if statement occuring...");
+            
             enemyPadding = Mathf.Abs(go.GetComponent<BoundsCheck>().radius);
 
         }
@@ -80,7 +80,7 @@ public class Main : MonoBehaviour
         pos.y = bndCheck.camHeight + enemyPadding;
 
         go.transform.position = pos;
-        print("Set Position");
+        
 
 
         // Invoke SpawnEnemy() again
