@@ -53,7 +53,7 @@ public class Hero : MonoBehaviour
 
 
 
-    void Awake()
+    void Start()
     {
 
         if (S == null)
@@ -65,14 +65,16 @@ public class Hero : MonoBehaviour
         }
 
         //fireDelegate += TempFire;
-        
+
+        // Reset the weapons to start _Hero with 1 blaster
+
+        ClearWeapons();
+
+        weapons[0].SetType(WeaponType.blaster);
+
 
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
