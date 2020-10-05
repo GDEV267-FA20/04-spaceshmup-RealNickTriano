@@ -212,9 +212,41 @@ public class Hero : MonoBehaviour
         switch (pu.type)
         {
 
+            case WeaponType.shield:                                          // a
+
+                shieldLevel++;
+
+                break;
 
 
-            // Leave this switch block empty for now.
+
+            default:                                                         // b
+
+                if (pu.type == weapons[0].type)
+                { // If it is the same type  // c
+
+                    Weapon w = GetEmptyWeaponSlot();
+
+                    if (w != null)
+                    {
+
+                        // Set it to pu.type
+
+                        w.SetType(pu.type);
+
+                    }
+
+                }
+                else
+                { // If this is a different weapon type               // d
+
+                    ClearWeapons();
+
+                    weapons[0].SetType(pu.type);
+
+                }
+
+                break;
 
 
 
@@ -255,4 +287,38 @@ public class Hero : MonoBehaviour
         }
 
     }
+
+    Weapon GetEmptyWeaponSlot()
+    {
+
+        for (int i = 0; i < weapons.Length; i++)
+        {
+
+            if (weapons[i].type == WeaponType.none)
+            {
+
+                return (weapons[i]);
+
+            }
+
+        }
+
+        return (null);
+
+    }
+
+
+
+    void ClearWeapons()
+    {
+
+        foreach (Weapon w in weapons)
+        {
+
+            w.SetType(WeaponType.none);
+
+        }
+
+    }
+
 }
