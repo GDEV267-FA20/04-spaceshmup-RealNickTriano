@@ -127,7 +127,7 @@ public class Hero : MonoBehaviour
         }
     }
 
-    void TempFire()
+   /* void TempFire()
     {                                                        
 
         GameObject projGO = Instantiate<GameObject>(projectilePrefab);
@@ -153,7 +153,7 @@ public class Hero : MonoBehaviour
         rigidB.velocity = Vector3.up * tSpeed;
 
 
-    }
+    }*/
 
 
 

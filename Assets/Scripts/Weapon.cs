@@ -149,7 +149,7 @@ public class Weapon : MonoBehaviour
         GameObject rootGO = transform.root.gameObject;                       
 
         if (rootGO.GetComponent<Hero>() != null)
-        {                         // d
+        {                         
 
             rootGO.GetComponent<Hero>().fireDelegate += Fire;
 
