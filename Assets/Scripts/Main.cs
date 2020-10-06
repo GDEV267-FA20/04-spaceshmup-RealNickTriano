@@ -139,7 +139,7 @@ public class Main : MonoBehaviour
         bndCheck = GetComponent<BoundsCheck>();
 
 
-
+        Invoke("SpawnHero", 0f);
 
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
 
@@ -167,6 +167,18 @@ public class Main : MonoBehaviour
         if(script.buttonPressed == 0)
         {
             newHero = prefabHeroes[0];
+        }
+        else if (script.buttonPressed == 1)
+        {
+            newHero = prefabHeroes[1];
+        }
+        else if (script.buttonPressed == 2)
+        {
+            newHero = prefabHeroes[2];
+        }
+        else
+        {
+
         }
         GameObject go = Instantiate<GameObject>(newHero);
 
