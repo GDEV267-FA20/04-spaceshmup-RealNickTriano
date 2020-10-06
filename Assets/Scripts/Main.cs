@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,11 +7,17 @@ public class Main : MonoBehaviour
 {
     static public Main S;                                // A singleton for Main
 
+    public GlobalControl script;
+
     static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
 
     [Header("Set in Inspector")]
 
     public GameObject[] prefabEnemies;              // Array of Enemy prefabs
+
+    public GameObject[] prefabHeroes;       // Array of Hero prefabs
+
+    public GameObject newHero;          // Selected hero by player
 
     public float enemySpawnPerSecond = 0.5f; // # Enemies/second
 
@@ -30,6 +35,8 @@ public class Main : MonoBehaviour
 
 
                                     WeaponType.spread,  WeaponType.shield };
+
+    
 
 
     private BoundsCheck bndCheck;
@@ -86,10 +93,45 @@ public class Main : MonoBehaviour
 
 
     }
+    /*public void button0Pressed()
+    {
+        bool Button0 = true;
+        invoke("setHero");
+    }
+    public void button1Pressed()
+    {
+        bool Button1 = true;
+        invoke("setHero");
+    }
+    public void button2Pressed()
+    {
+        bool Button2 = true;
+        invoke("setHero");
+    }
+    public void setHero()
+    {
+        if (Button0)
+        {
+            newHero = prefabHeroes[0];
+        }
+        else if (Button1)
+        {
+            newHero = prefabHeroes[1];
+        }
+        else if (Button2)
+        {
+            newHero = prefabHeroes[2];
+        }
+        else
+        {
+
+        }
+    }*/
 
     void Awake()
     {
-
+        script = GameObject.Find("GlobalObject").GetComponent<GlobalControl>();
+        Debug.Log(script.buttonPressed);
         S = this;
 
         // Set bndCheck to reference the BoundsCheck component on this GameObject
@@ -120,7 +162,20 @@ public class Main : MonoBehaviour
 
     }
 
+    public void SpawnHero()
+    {
+        if(script.buttonPressed == 0)
+        {
+            newHero = prefabHeroes[0];
+        }
+        GameObject go = Instantiate<GameObject>(newHero);
 
+        Vector3 pos = Vector3.zero;
+
+        go.transform.position = pos;
+
+
+    }
 
     public void SpawnEnemy()
     {
