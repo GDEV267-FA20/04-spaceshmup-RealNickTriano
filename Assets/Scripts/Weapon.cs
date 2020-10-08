@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Security.Cryptography;
 using UnityEngine;
 
 /// <summary>
@@ -210,7 +212,7 @@ public class Weapon : MonoBehaviour
         // If it hasn't been enough time between shots, return
 
         if (Time.time - lastShotTime < def.delayBetweenShots)
-        {              // i
+        {              
 
             return;
 
@@ -218,7 +220,7 @@ public class Weapon : MonoBehaviour
 
         Projectile p;
 
-        Vector3 vel = Vector3.up * def.velocity;                             
+        Vector3 vel = Vector3.up * def.velocity;
 
         if (transform.up.y < 0)
         {

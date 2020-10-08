@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
@@ -79,6 +81,30 @@ public class Hero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //faceMouse();
+        /*// Get the current screen position of the mouse from Input
+
+        Vector3 mousePos2D = Input.mousePosition;
+
+
+
+        // The Camera's z position sets how far to push the mouse into 3D
+
+        mousePos2D.z = -Camera.main.transform.position.z;
+
+
+
+        // Convert the point from 2D screen space into 3D game world space
+
+        Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(mousePos2D);
+
+        // get the angle to rotate the ship by
+        float angle = Mathf.Atan2((mousePos3D.y - transform.position.y), (mousePos3D.x - transform.position.x)) * Mathf.Rad2Deg;
+        //Debug.Log(angle);
+
+        // Why doesnt this work???
+        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); 
+        */
         // Pull in information from the Input class
 
         float xAxis = Input.GetAxis("Horizontal");                            
@@ -100,7 +126,7 @@ public class Hero : MonoBehaviour
 
         // Rotate the ship to make it feel more dynamic                      
 
-        transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
+        //transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
         // Allow the ship to fire
 
@@ -130,6 +156,16 @@ public class Hero : MonoBehaviour
 
         }
     }
+
+    /*void faceMouse()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
+
+        transform.up = direction;
+    }*/
 
    /* void TempFire()
     {                                                        

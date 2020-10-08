@@ -132,6 +132,9 @@ public class Main : MonoBehaviour
     {
         script = GameObject.Find("GlobalObject").GetComponent<GlobalControl>();
         Debug.Log(script.buttonPressed);
+
+        Invoke("SpawnHero", 0f);
+
         S = this;
 
         // Set bndCheck to reference the BoundsCheck component on this GameObject
@@ -164,10 +167,9 @@ public class Main : MonoBehaviour
 
     public void SpawnHero()
     {
-        if(script.buttonPressed == 0)
-        {
-            newHero = prefabHeroes[0];
-        }
+        
+        newHero = prefabHeroes[(int)script.buttonPressed];
+        
         GameObject go = Instantiate<GameObject>(newHero);
 
         Vector3 pos = Vector3.zero;
