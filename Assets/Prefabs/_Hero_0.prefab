@@ -248,8 +248,9 @@ GameObject:
   - component: {fileID: 489181776036057855}
   - component: {fileID: 489181776036057854}
   - component: {fileID: 489181776036057853}
+  - component: {fileID: 3446999771027595329}
   m_Layer: 8
-  m_Name: _Hero
+  m_Name: _Hero_0
   m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,6 +340,19 @@ MonoBehaviour:
   offLeft: 0
   offUp: 0
   offDown: 0
+--- !u!114 &3446999771027595329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489181776036057841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ffe75898e630f3479199bdea899d17f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
 --- !u!1 &489181776245345101
 GameObject:
   m_ObjectHideFlags: 0

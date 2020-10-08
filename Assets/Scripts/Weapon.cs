@@ -219,15 +219,17 @@ public class Weapon : MonoBehaviour
         }
 
         Projectile p;
+        Vector2 vel = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        vel *= def.velocity;
 
-        Vector3 vel = Vector3.up * def.velocity;
+        //Vector3 vel = Vector3.up * def.velocity;
 
-        if (transform.up.y < 0)
+        /*if (transform.up.y < 0)
         {
 
             vel.y = -vel.y;
 
-        }
+        }*/
 
         switch (type)
         {                                                      
