@@ -96,8 +96,8 @@ public class Main : MonoBehaviour
 
         bndCheck = GetComponent<BoundsCheck>();
 
-
-
+        // Spawn player selected hero
+        SpawnHero();
 
         // Invoke SpawnEnemy() once (in 2 seconds, based on default values)
 
@@ -121,7 +121,10 @@ public class Main : MonoBehaviour
     }
 
 
+    void SpawnHero()
+    {
 
+    }
     public void SpawnEnemy()
     {
 

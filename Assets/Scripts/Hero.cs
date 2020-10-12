@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
-    static public Hero S; // Singleton                              
+    static public Hero S; // Singleton 
 
-
+    bool firstButtonDown;
+    float firstButtonDownTime;
 
     [Header("Set in Inspector")]
 
@@ -26,15 +28,19 @@ public class Hero : MonoBehaviour
 
     public Weapon[] weapons;
 
+    public Animator myAnimationController;
 
 
     [Header("Set Dynamically")]
+
+    
 
     [SerializeField]
 
     private float _shieldLevel = 1; // Remember the underscore
 
-    
+    private bool aniTrigger;
+
 
     // This variable holds a reference to the last triggering GameObject
 
@@ -79,37 +85,17 @@ public class Hero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Pull in information from the Input class
+        if (!(Input.GetButtonDown("d")))
+        {
+            Move();
+        }
+        Dodge(aniTrigger);
+        if (aniTrigger)
+        {
+            myAnimationController.ResetTrigger("EnterDodge");
+        }
 
-        float xAxis = Input.GetAxis("Horizontal");                            
-        float yAxis = Input.GetAxis("Vertical");                              
-
-
-
-        // Change transform.position based on the axes
-
-        Vector3 pos = transform.position;
-
-        pos.x += xAxis * speed * Time.deltaTime;
-
-        pos.y += yAxis * speed * Time.deltaTime;
-
-        transform.position = pos;
-
-
-
-        // Rotate the ship to make it feel more dynamic                      
-
-        transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
-
-        // Allow the ship to fire
-
-       /* if (Input.GetKeyDown(KeyCode.Space))
-        {                           // a
-
-            TempFire();
-
-        }*/
+       
 
 
         // Use the fireDelegate to fire Weapons
@@ -129,35 +115,111 @@ public class Hero : MonoBehaviour
 
 
         }
+
+        
+
+    }
+    /*Steps to have a double tap of key trigger animation:
+     * 1.When first key gets pressed 
+     *      a. hold boolean value as true
+     *      b. Get time of initial key down
+     * 2.If the first key is pressed = true AND Time.time minus b is less then .5?
+     * Then, activate animation
+     * 3.At the end probably need to set boolean false otherwise it will keep triggering 2
+     * 
+     * 
+     */
+    bool Dodge(bool trigger)
+    {
+        
+
+        if (Input.GetButtonDown("d") && !firstButtonDown)
+        {
+            firstButtonDownTime = Time.time;
+            firstButtonDown = true;
+            return trigger =  false;
+        }
+        else if (Input.GetButtonDown("d") && firstButtonDown)
+        {
+            if (firstButtonDownTime - Time.time < .5f)
+            {
+                //clear these values for the next check
+                firstButtonDownTime = 0f;
+                firstButtonDown = false;
+
+                //Trigger animation
+                myAnimationController.SetTrigger("EnterDodge");
+                return trigger =true;
+                Debug.Log("Animation Triggered");
+            }
+            else
+            {
+                //Didnt press quickly enough
+                firstButtonDownTime = 0f;
+                firstButtonDown = false;
+                return trigger = false;
+
+            }
+            return trigger =  false;
+        }
+
+        return trigger =  false;
     }
 
-   /* void TempFire()
-    {                                                        
+    void Move()
+    {
+        // Pull in information from the Input class
 
-        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
-
-        projGO.transform.position = transform.position;
-
-        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
-
-        //        rigidB.velocity = Vector3.up * projectileSpeed;                    
+        float xAxis = Input.GetAxis("Horizontal");
+        float yAxis = Input.GetAxis("Vertical");
 
 
 
+        // Change transform.position based on the axes
 
-        Projectile proj = projGO.GetComponent<Projectile>();                
+        Vector3 pos = transform.position;
 
+        pos.x += xAxis * speed * Time.deltaTime;
 
-        proj.type = WeaponType.blaster;
+        pos.y += yAxis * speed * Time.deltaTime;
 
-
-        float tSpeed = Main.GetWeaponDefinition(proj.type).velocity;
-
-
-        rigidB.velocity = Vector3.up * tSpeed;
+        transform.position = pos;
 
 
-    }*/
+
+        // Rotate the ship to make it feel more dynamic                      
+
+        transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
+
+    }
+
+    /* void TempFire()
+     {                                                        
+
+         GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+
+         projGO.transform.position = transform.position;
+
+         Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+
+         //        rigidB.velocity = Vector3.up * projectileSpeed;                    
+
+
+
+
+         Projectile proj = projGO.GetComponent<Projectile>();                
+
+
+         proj.type = WeaponType.blaster;
+
+
+         float tSpeed = Main.GetWeaponDefinition(proj.type).velocity;
+
+
+         rigidB.velocity = Vector3.up * tSpeed;
+
+
+     }*/
 
 
 
