@@ -8,11 +8,15 @@ public class Main : MonoBehaviour
 {
     static public Main S;                                // A singleton for Main
 
+    public GlobalControl script;
+
     static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
 
     [Header("Set in Inspector")]
 
     public GameObject[] prefabEnemies;              // Array of Enemy prefabs
+
+    public GameObject[] prefabHeroes;           // Array of Hero prefabs
 
     public float enemySpawnPerSecond = 0.5f; // # Enemies/second
 
@@ -89,6 +93,7 @@ public class Main : MonoBehaviour
 
     void Awake()
     {
+        script = GameObject.Find("GlobalObject").GetComponent<GlobalControl>();
 
         S = this;
 
@@ -123,7 +128,15 @@ public class Main : MonoBehaviour
 
     void SpawnHero()
     {
+        GameObject newHero;
 
+        newHero = prefabHeroes[(int)script.buttonPressed];
+
+        GameObject go = Instantiate<GameObject>(newHero);
+
+        Vector3 pos = Vector3.zero;
+
+        go.transform.position = pos;
     }
     public void SpawnEnemy()
     {

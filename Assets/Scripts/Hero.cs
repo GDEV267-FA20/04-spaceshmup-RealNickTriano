@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
@@ -15,6 +17,8 @@ public class Hero : MonoBehaviour
     // These fields control the movement of the ship
 
     public float speed = 30;
+
+    public float dodgeSpeed = 10;
 
     public float rollMult = -45;
 
@@ -85,15 +89,9 @@ public class Hero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!(Input.GetButtonDown("d")))
-        {
-            Move();
-        }
-        Dodge(aniTrigger);
-        if (aniTrigger)
-        {
-            myAnimationController.ResetTrigger("EnterDodge");
-        }
+
+        Move();
+        Dodge();
 
        
 
@@ -129,7 +127,7 @@ public class Hero : MonoBehaviour
      * 
      * 
      */
-    bool Dodge(bool trigger)
+    void Dodge()
     {
         
 
@@ -137,19 +135,21 @@ public class Hero : MonoBehaviour
         {
             firstButtonDownTime = Time.time;
             firstButtonDown = true;
-            return trigger =  false;
+            
         }
         else if (Input.GetButtonDown("d") && firstButtonDown)
         {
-            if (firstButtonDownTime - Time.time < .5f)
+            if (Time.time - firstButtonDownTime < .2f)
             {
                 //clear these values for the next check
                 firstButtonDownTime = 0f;
                 firstButtonDown = false;
 
                 //Trigger animation
-                myAnimationController.SetTrigger("EnterDodge");
-                return trigger =true;
+                Vector3 pos = transform.position;
+                pos.x += 5;
+                float t = ((Time.time - firstButtonDownTime) * dodgeSpeed) / (Vector3.Distance(transform.position, pos));
+                transform.position = Vector3.Slerp(transform.position, pos, t);
                 Debug.Log("Animation Triggered");
             }
             else
@@ -157,13 +157,11 @@ public class Hero : MonoBehaviour
                 //Didnt press quickly enough
                 firstButtonDownTime = 0f;
                 firstButtonDown = false;
-                return trigger = false;
 
             }
-            return trigger =  false;
+           
         }
-
-        return trigger =  false;
+ 
     }
 
     void Move()
